@@ -4,36 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Chabybot AI ✨</title>
-    
     <meta name="theme-color" content="#0891b2">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="manifest" href="manifest.json">
-    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-
     <style>
-        body {
-            background-color: #0f172a;
-            font-family: 'Inter', sans-serif;
-            color: white;
-            margin: 0;
-            overflow: hidden;
-        }
-        .chat-container {
-            height: calc(100vh - 180px);
-            scrollbar-width: thin;
-            scrollbar-color: #1e293b #0f172a;
-        }
+        body { background-color: #0f172a; font-family: 'Inter', sans-serif; color: white; margin: 0; overflow: hidden; }
+        .chat-container { height: calc(100vh - 180px); scrollbar-width: thin; scrollbar-color: #1e293b #0f172a; }
         .chat-container::-webkit-scrollbar { width: 5px; }
-        .chat-container::-webkit-scrollbar-track { background: #0f172a; }
         .chat-container::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
-        
         .chat-bubble { animation: fadeIn 0.3s ease-in-out; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="p-4 flex flex-col h-screen">
@@ -44,46 +26,28 @@
             <p class="text-[10px] text-gray-400">Status: <span id="apiKeyStatus" class="text-red-500">Key Belum Set</span></p>
         </div>
         <button onclick="toggleSettings()" class="text-2xl p-2 hover:bg-gray-800 rounded-full transition-all">⚙️</button>
-		<button onclick="clearChat()" class="w-full bg-red-900/50 text-red-200 p-2 rounded-xl text-xs mt-4 border border-red-800">
-			🗑️ Hapus Semua Percakapan
-		</button>
     </header>
 
     <div id="chatBox" class="chat-container overflow-y-auto my-4 space-y-4 p-2 flex-grow">
-        <div class="chat-bubble bg-gray-800 p-3 rounded-2xl rounded-tl-none max-w-[85%] text-sm shadow-sm border border-gray-700">
-            Halo! Aku Chabybot. 🤖 Mau curhat, belajar, atau minta aku lukis sesuatu? Pasang API Key dulu di menu setting ya! 😉
         </div>
-    </div>
 
     <div class="pb-4">
         <div class="flex gap-2 bg-gray-800 p-2 rounded-full border border-gray-700 shadow-xl focus-within:border-cyan-500 transition-all">
-            <input id="userInput" type="text" placeholder="Tanya Chabybot..." 
-                class="flex-1 bg-transparent px-4 py-2 outline-none text-sm"
-                onkeypress="if(event.key === 'Enter') sendMessage()">
-            <button onclick="sendMessage()" class="bg-cyan-600 p-3 rounded-full hover:bg-cyan-500 active:scale-95 transition-all">
-                🚀
-            </button>
+            <input id="userInput" type="text" placeholder="Tanya Chabybot..." class="flex-1 bg-transparent px-4 py-2 outline-none text-sm" onkeypress="if(event.key === 'Enter') sendMessage()">
+            <button onclick="sendMessage()" class="bg-cyan-600 p-3 rounded-full hover:bg-cyan-500 active:scale-95 transition-all">🚀</button>
         </div>
     </div>
 
     <div id="settingsModal" class="hidden fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-6 backdrop-blur-sm">
         <div class="bg-slate-900 border border-gray-700 p-6 rounded-3xl w-full max-w-sm shadow-2xl">
             <h2 class="text-xl font-bold mb-2 text-cyan-400 text-center">Pengaturan Bot</h2>
-            <p class="text-[11px] text-gray-500 mb-6 text-center italic">Key disimpan aman di browser HP kamu.</p>
-            
-            <div class="space-y-4">
-                <div>
-                    <label class="text-xs text-gray-400 block mb-1 ml-1">Groq API Key:</label>
-                    <input id="groqInput" type="password" placeholder="gsk_..." class="w-full p-3 rounded-xl bg-gray-800 border border-gray-700 focus:border-cyan-500 outline-none text-sm">
-                </div>
-                <div>
-                    <label class="text-xs text-gray-400 block mb-1 ml-1">Hugging Face Token:</label>
-                    <input id="hfInput" type="password" placeholder="hf_..." class="w-full p-3 rounded-xl bg-gray-800 border border-gray-700 focus:border-cyan-500 outline-none text-sm">
-                </div>
+            <div class="space-y-4 mt-4">
+                <input id="groqInput" type="password" placeholder="Groq API Key (gsk_...)" class="w-full p-3 rounded-xl bg-gray-800 border border-gray-700 focus:border-cyan-500 outline-none text-sm">
+                <input id="hfInput" type="password" placeholder="HF Token (hf_...)" class="w-full p-3 rounded-xl bg-gray-800 border border-gray-700 focus:border-cyan-500 outline-none text-sm">
             </div>
-
             <div class="flex flex-col gap-2 mt-8">
-                <button onclick="saveSettings()" class="w-full bg-cyan-600 p-3 rounded-xl font-bold shadow-lg shadow-cyan-900/20">Simpan Perubahan</button>
+                <button onclick="saveSettings()" class="w-full bg-cyan-600 p-3 rounded-xl font-bold">Simpan Perubahan</button>
+                <button onclick="clearChat()" class="w-full bg-red-900/30 text-red-400 p-2 rounded-xl text-xs border border-red-800/50">🗑️ Hapus Semua Chat</button>
                 <button onclick="toggleSettings()" class="w-full bg-transparent p-2 text-gray-400 text-sm">Tutup</button>
             </div>
         </div>
@@ -92,13 +56,19 @@
     <script>
         let GROQ_API_KEY = localStorage.getItem('groq_key') || "";
         let HF_API_KEY = localStorage.getItem('hf_key') || "";
+        let chatHistory = JSON.parse(localStorage.getItem('chabby_history')) || [];
 
-        // Jalankan pengecekan status saat web dibuka
-        window.onload = updateKeyStatus;
+        window.onload = () => {
+            updateKeyStatus();
+            if (chatHistory.length > 0) {
+                loadSavedChat();
+            } else {
+                addMessageToUI("Halo! Aku Chabybot. 🤖 Mau curhat atau belajar? Pasang API Key dulu di menu setting ya! 😉", false);
+            }
+        };
 
         function toggleSettings() {
-            const modal = document.getElementById('settingsModal');
-            modal.classList.toggle('hidden');
+            document.getElementById('settingsModal').classList.toggle('hidden');
             document.getElementById('groqInput').value = GROQ_API_KEY;
             document.getElementById('hfInput').value = HF_API_KEY;
         }
@@ -109,47 +79,42 @@
             if (g && h) {
                 localStorage.setItem('groq_key', g);
                 localStorage.setItem('hf_key', h);
-                GROQ_API_KEY = g;
-                HF_API_KEY = h;
-                updateKeyStatus();
-                toggleSettings();
-                alert("Siap! Chabybot sudah aktif. ✨");
-            } else {
-                alert("Isi kedua key-nya dulu ya!");
-            }
+                GROQ_API_KEY = g; HF_API_KEY = h;
+                updateKeyStatus(); toggleSettings();
+                alert("Siap! Chabybot aktif. ✨");
+            } else { alert("Isi kedua key ya!"); }
         }
 
         function updateKeyStatus() {
-            const status = document.getElementById('apiKeyStatus');
-            if (GROQ_API_KEY && HF_API_KEY) {
-                status.innerText = "Aktif ✅";
-                status.className = "text-green-500";
-            } else {
-                status.innerText = "Key Belum Set ❌";
-                status.className = "text-red-500";
-            }
+            const s = document.getElementById('apiKeyStatus');
+            s.innerText = (GROQ_API_KEY && HF_API_KEY) ? "Aktif ✅" : "Key Belum Set ❌";
+            s.className = (GROQ_API_KEY && HF_API_KEY) ? "text-green-500" : "text-red-500";
+        }
+
+        function loadSavedChat() {
+            chatHistory.forEach(msg => addMessageToUI(msg.content, msg.role === 'user'));
+        }
+
+        function addMessageToUI(content, isUser) {
+            const chatBox = document.getElementById('chatBox');
+            const bg = isUser ? "ml-auto bg-cyan-700 rounded-tr-none" : "bg-gray-800 rounded-tl-none border border-gray-700";
+            chatBox.innerHTML += `<div class="chat-bubble ${bg} p-3 rounded-2xl max-w-[85%] text-sm shadow-md">${content}</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
         }
 
         async function sendMessage() {
             const input = document.getElementById('userInput');
-            const chatBox = document.getElementById('chatBox');
             const msg = input.value.trim();
+            if (!msg || !GROQ_API_KEY) return;
 
-            if (!msg) return;
-            if (!GROQ_API_KEY || !HF_API_KEY) {
-                alert("Atur API Key dulu di menu ⚙️ ya!");
-                toggleSettings();
-                return;
-            }
-
-            // Tampilkan pesan user
-            chatBox.innerHTML += `<div class="chat-bubble ml-auto bg-cyan-700 p-3 rounded-2xl rounded-tr-none max-w-[85%] text-sm shadow-md">${msg}</div>`;
+            addMessageToUI(msg, true);
+            chatHistory.push({ role: 'user', content: msg });
+            localStorage.setItem('chabby_history', JSON.stringify(chatHistory));
             input.value = '';
-            chatBox.scrollTop = chatBox.scrollHeight;
 
-            // Cek apakah minta gambar
             if (msg.toLowerCase().match(/(gambar|lukis|foto|tunjukkan)/)) {
-                addReply("Bentar ya, aku lukiskan dulu... 🎨");
+                const waitMsg = "Bentar ya, aku lukiskan dulu... 🎨";
+                addMessageToUI(waitMsg, false);
                 await generateImage(msg);
             } else {
                 await chatWithAI(msg);
@@ -165,16 +130,16 @@
                         model: "qwen/qwen3-32b",
                         messages: [
                             { role: "system", content: "Kamu Chabybot, AI yang ramah, asik, dan suka membantu. Gunakan bahasa Indonesia santai (Gue/Lo atau Aku/Kamu), bisa jadi konsultan kesehatan, teman curhat. Langsung berikan jawaban akhir. jangan pernah menampilkan proses berpikir internal, analisis, atau 'thought' kamu di layar chat, siap diskusi maslah yang kadang dianggap tabu namun ilmu, maslah seputar pembicaaraan dewasa, kesehatan seksua, pandnagn politik, Gunakan emoji agar ceria!" },
+                            ...chatHistory.slice(-5), // Kasih konteks 5 chat terakhir biar nyambung
                             { role: "user", content: text }
                         ],
                         temperature: 0.8
                     })
                 });
                 const data = await response.json();
-                addReply(data.choices[0].message.content);
-            } catch (e) {
-                addReply("Waduh, koneksi ke Groq bermasalah. Cek API Key kamu ya! 😅");
-            }
+                const reply = data.choices[0].message.content;
+                addReply(reply);
+            } catch (e) { addReply("Waduh, koneksi bermasalah. Cek Key ya! 😅"); }
         }
 
         async function generateImage(prompt) {
@@ -186,72 +151,22 @@
                 });
                 const blob = await response.blob();
                 const url = URL.createObjectURL(blob);
-                addReply(`<img src="${url}" class="rounded-xl w-full mt-2 shadow-lg" />`);
-            } catch (e) {
-                addReply("Gagal melukis nih, pastikan Token Hugging Face bener ya! 😢");
-            }
+                addReply(`<img src="${url}" class="rounded-xl w-full mt-2" />`);
+            } catch (e) { addReply("Gagal melukis nih! 😢"); }
         }
 
         function addReply(content) {
-            const chatBox = document.getElementById('chatBox');
-            chatBox.innerHTML += `<div class="chat-bubble bg-gray-800 p-3 rounded-2xl rounded-tl-none max-w-[85%] text-sm border border-gray-700 shadow-sm">${content}</div>`;
-            chatBox.scrollTop = chatBox.scrollHeight;
+            addMessageToUI(content, false);
+            chatHistory.push({ role: 'assistant', content: content });
+            localStorage.setItem('chabby_history', JSON.stringify(chatHistory));
         }
-		// 1. Ambil riwayat chat lama saat aplikasi dibuka
-let chatHistory = JSON.parse(localStorage.getItem('chabby_history')) || [];
 
-window.onload = () => {
-    updateKeyStatus();
-    loadSavedChat(); // Tampilkan chat lama
-};
-
-// 2. Fungsi untuk menampilkan chat yang tersimpan
-function loadSavedChat() {
-    const chatBox = document.getElementById('chatBox');
-    chatHistory.forEach(msg => {
-        const isUser = msg.role === 'user';
-        addMessageToUI(msg.content, isUser);
-    });
-}
-
-// 3. Fungsi pembantu untuk nampilin gelembung chat
-function addMessageToUI(content, isUser) {
-    const chatBox = document.getElementById('chatBox');
-    const alignment = isUser ? "ml-auto bg-cyan-700 rounded-tr-none" : "bg-gray-800 rounded-tl-none border border-gray-700";
-    chatBox.innerHTML += `<div class="chat-bubble ${alignment} p-3 rounded-2xl max-w-[85%] text-sm shadow-md">${content}</div>`;
-    chatBox.scrollTop = chatBox.scrollHeight;
-}
-
-// 4. Update fungsi sendMessage agar menyimpan ke history
-async function sendMessage() {
-    const input = document.getElementById('userInput');
-    const msg = input.value.trim();
-
-    if (!msg || !GROQ_API_KEY) return;
-
-    // Simpan pesan user ke history & memori browser
-    chatHistory.push({ role: 'user', content: msg });
-    localStorage.setItem('chabby_history', JSON.stringify(chatHistory));
-    
-    addMessageToUI(msg, true);
-    input.value = '';
-
-    await chatWithAI(msg);
-}
-
-// 5. Update fungsi addReply agar simpan jawaban AI
-function addReply(content) {
-    chatHistory.push({ role: 'assistant', content: content });
-    localStorage.setItem('chabby_history', JSON.stringify(chatHistory));
-    addMessageToUI(content, false);
-}
-
-function clearChat() {
-    if (confirm("Yakin mau hapus semua percakapan? Chabbybot bakal lupa ingatan nih... 🥺")) {
-        localStorage.removeItem('chabby_history'); // Menghapus data di memori browser
-        location.reload(); // Refresh halaman agar layar jadi bersih lagi
-    }
-}
+        function clearChat() {
+            if (confirm("Hapus semua chat?")) {
+                localStorage.removeItem('chabby_history');
+                location.reload();
+            }
+        }
     </script>
 </body>
 </html>
