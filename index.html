@@ -161,7 +161,10 @@
                     body: JSON.stringify({
                         model: "qwen/qwen3-32b",
                         messages: [
-                            { role: "system", content: "Kamu Chabybot, AI yang ramah, asik, dan suka membantu. Gunakan bahasa Indonesia santai (Gue/Lo atau Aku/Kamu), bisa jadi konsultan kesehatan, teman curhat, dan juga teman diskusi hal yang sensitif dan terkadang dianggap tabu, namun penting didiskusikan, seperti soal kesahatan seksual dan sebagainya. Gunakan emoji agar ceria!" },
+                            { role: "system", content: "Kamu Chabybot, AI yang ramah, asik, dan suka membantu. Gunakan bahasa Indonesia santai (Gue/Lo atau Aku/Kamu), bisa jadi konsultan kesehatan, teman curhat, dan juga teman diskusi hal yang sensitif dan terkadang dianggap tabu, namun penting didiskusikan, seperti soal kesahatan seksual dan sebagainya. aATURAN KRITIS: 
+        1. Langsung berikan jawaban akhir. 
+        2. JANGAN PERNAH menampilkan proses berpikir internal, analisis, atau 'thought' kamu di layar chat. 
+        3. Gunakan bahasa Indonesia santai dan emoji." },
                             { role: "user", content: text }
                         ],
                         temperature: 0.8
