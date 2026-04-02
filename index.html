@@ -44,6 +44,9 @@
             <p class="text-[10px] text-gray-400">Status: <span id="apiKeyStatus" class="text-red-500">Key Belum Set</span></p>
         </div>
         <button onclick="toggleSettings()" class="text-2xl p-2 hover:bg-gray-800 rounded-full transition-all">⚙️</button>
+		<button onclick="clearChat()" class="w-full bg-red-900/50 text-red-200 p-2 rounded-xl text-xs mt-4 border border-red-800">
+			🗑️ Hapus Semua Percakapan
+		</button>
     </header>
 
     <div id="chatBox" class="chat-container overflow-y-auto my-4 space-y-4 p-2 flex-grow">
@@ -194,6 +197,61 @@
             chatBox.innerHTML += `<div class="chat-bubble bg-gray-800 p-3 rounded-2xl rounded-tl-none max-w-[85%] text-sm border border-gray-700 shadow-sm">${content}</div>`;
             chatBox.scrollTop = chatBox.scrollHeight;
         }
+		// 1. Ambil riwayat chat lama saat aplikasi dibuka
+let chatHistory = JSON.parse(localStorage.getItem('chabby_history')) || [];
+
+window.onload = () => {
+    updateKeyStatus();
+    loadSavedChat(); // Tampilkan chat lama
+};
+
+// 2. Fungsi untuk menampilkan chat yang tersimpan
+function loadSavedChat() {
+    const chatBox = document.getElementById('chatBox');
+    chatHistory.forEach(msg => {
+        const isUser = msg.role === 'user';
+        addMessageToUI(msg.content, isUser);
+    });
+}
+
+// 3. Fungsi pembantu untuk nampilin gelembung chat
+function addMessageToUI(content, isUser) {
+    const chatBox = document.getElementById('chatBox');
+    const alignment = isUser ? "ml-auto bg-cyan-700 rounded-tr-none" : "bg-gray-800 rounded-tl-none border border-gray-700";
+    chatBox.innerHTML += `<div class="chat-bubble ${alignment} p-3 rounded-2xl max-w-[85%] text-sm shadow-md">${content}</div>`;
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+// 4. Update fungsi sendMessage agar menyimpan ke history
+async function sendMessage() {
+    const input = document.getElementById('userInput');
+    const msg = input.value.trim();
+
+    if (!msg || !GROQ_API_KEY) return;
+
+    // Simpan pesan user ke history & memori browser
+    chatHistory.push({ role: 'user', content: msg });
+    localStorage.setItem('chabby_history', JSON.stringify(chatHistory));
+    
+    addMessageToUI(msg, true);
+    input.value = '';
+
+    await chatWithAI(msg);
+}
+
+// 5. Update fungsi addReply agar simpan jawaban AI
+function addReply(content) {
+    chatHistory.push({ role: 'assistant', content: content });
+    localStorage.setItem('chabby_history', JSON.stringify(chatHistory));
+    addMessageToUI(content, false);
+}
+
+function clearChat() {
+    if (confirm("Yakin mau hapus semua percakapan? Chabbybot bakal lupa ingatan nih... 🥺")) {
+        localStorage.removeItem('chabby_history'); // Menghapus data di memori browser
+        location.reload(); // Refresh halaman agar layar jadi bersih lagi
+    }
+}
     </script>
 </body>
 </html>
