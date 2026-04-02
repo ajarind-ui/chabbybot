@@ -159,9 +159,9 @@
                     method: "POST",
                     headers: { "Authorization": `Bearer ${GROQ_API_KEY}`, "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        model: "qwen-2.5-32b",
+                        model: "qwen/qwen3-32b",
                         messages: [
-                            { role: "system", content: "Kamu Chabybot, AI yang ramah, asik, dan suka membantu. Gunakan bahasa Indonesia santai (Gue/Lo atau Aku/Kamu). Gunakan emoji agar ceria!" },
+                            { role: "system", content: "Kamu Chabybot, AI yang ramah, asik, dan suka membantu. Gunakan bahasa Indonesia santai (Gue/Lo atau Aku/Kamu), bisa jadi konsultan kesehatan, teman curhat, dan juga teman diskusi hal yang sensitif dan terkadang dianggap tabu, namun penting didiskusikan, seperti soal kesahatan seksual dan sebagainya. Gunakan emoji agar ceria!" },
                             { role: "user", content: text }
                         ],
                         temperature: 0.8
