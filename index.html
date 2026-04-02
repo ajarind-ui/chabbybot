@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+	<link rel="manifest" href="manifest.json">
+	<meta name="theme-color" content="#0891b2">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	
+	<link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <script src="script.js" defer></script>
+	
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chabybot - Teman Virtualmu</title>
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .chat-container { height: calc(100vh - 160px); }
+        body { background: #0f172a; color: white; }
+    </style>
+</head>
+<body class="p-4">
+    <header class="text-center py-4 border-b border-gray-700">
+        <h1 class="text-xl font-bold text-cyan-400">Chabybot AI ✨</h1>
+        <p class="text-xs text-gray-400">Teman Belajar, Curhat, Virtualmu</p>
+    </header>
+
+    <div id="chatBox" class="chat-container overflow-y-auto my-4 space-y-4 p-2">
+        <div class="bg-gray-800 p-3 rounded-lg max-w-[80%] text-sm">
+            Halo! Aku siap nemenin kamu. Mau belajar, curhat, atau mau aku temenin ngehalu? 😉
+        </div>
+    </div>
+
+    <div class="fixed bottom-4 left-4 right-4 flex gap-2">
+        <input id="userInput" type="text" placeholder="Ketik sesuatu..." class="flex-1 p-3 rounded-full bg-gray-800 border border-gray-600 focus:outline-none focus:border-cyan-500">
+        <button onclick="sendMessage()" class="bg-cyan-600 p-3 rounded-full hover:bg-cyan-500">🚀</button>
+    </div>
+	
+	<div class="flex justify-between items-center mb-2 px-2">
+		<div class="text-xs text-gray-400">Status: <span id="apiKeyStatus" class="text-red-500">Key Belum Set</span></div>
+		<button onclick="toggleSettings()" class="text-gray-400 hover:text-white text-xl">⚙️</button>
+	</div>
+
+<div id="settingsModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+    <div class="bg-gray-900 border border-gray-700 p-6 rounded-2xl w-full max-w-md shadow-2xl">
+        <h2 class="text-lg font-bold mb-4 text-cyan-400">Pengaturan ChabbyBot</h2>
+        
+        <div class="space-y-4">
+            <div>
+                <label class="text-xs text-gray-400 block mb-1">Groq API Key:</label>
+                <input id="groqInput" type="password" placeholder="gsk_..." class="w-full p-2 rounded bg-gray-800 border border-gray-700 focus:border-cyan-500 outline-none text-sm">
+            </div>
+            <div>
+                <label class="text-xs text-gray-400 block mb-1">Hugging Face Token:</label>
+                <input id="hfInput" type="password" placeholder="hf_..." class="w-full p-2 rounded bg-gray-800 border border-gray-700 focus:border-cyan-500 outline-none text-sm">
+            </div>
+        </div>
+
+        <div class="flex gap-2 mt-6">
+            <button onclick="saveSettings()" class="flex-1 bg-cyan-600 p-2 rounded-lg font-bold hover:bg-cyan-500">Simpan</button>
+            <button onclick="toggleSettings()" class="flex-1 bg-gray-700 p-2 rounded-lg hover:bg-gray-600">Tutup</button>
+        </div>
+        <p class="text-[10px] text-gray-500 mt-4 text-center italic">*Key kamu aman, hanya tersimpan di browser perangkat ini (LocalStorage).*</p>
+    </div>
+</div>
+	
+    <script src="script.js"></script>
+</body>
+</html>
